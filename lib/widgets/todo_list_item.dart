@@ -55,7 +55,7 @@ class _TodoListItemState extends State<TodoListItem> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    DateFormat('dd/MM - HH:mm').format(widget.todo.date),
+                    DateFormat('dd/MM - HH:mm').format(widget.todo.dateTime),
                     style: const TextStyle(fontSize: 12),
                   ),
                   Text(
