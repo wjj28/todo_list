@@ -17,10 +17,22 @@ class _TodoListPageState extends State<TodoListPage> {
 
 
   List<Todo> todos = [];
+
   Todo? deletedTodo;
   int? deletedTodoPos;
   Todo? completedTodo;
 
+
+  @override
+  void initState() {
+    super.initState();
+
+    todoRepository.getTodoList().then((value) {
+      setState(() {
+        todos = value;
+      });
+    });
+  }
 
   String? errorText;
 
@@ -29,7 +41,7 @@ class _TodoListPageState extends State<TodoListPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('ToDo list '),
+          title: const Text(' 📃 Cami\'s ToDo list '),
           centerTitle: true,
           // actions: [
           //   Padding(
@@ -63,16 +75,17 @@ class _TodoListPageState extends State<TodoListPage> {
                       child: TextField(
                         controller: todoController,
                         decoration:  InputDecoration(
-                          hintText: 'What are the ToDos for today?',
+                          labelText: 'What are the ToDos for today?',
+                          // hintText: 'Read a book..',
                           enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                   color: Colors.lightBlueAccent
                               )
                           ),
                           border: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.lightBlueAccent
-                            )
+                              borderSide: BorderSide(
+                                  color: Colors.lightBlueAccent
+                              )
                           ),
                           errorText: errorText,
                         ),
@@ -151,12 +164,22 @@ class _TodoListPageState extends State<TodoListPage> {
 
   void newTodo() {
     String task = todoController.text;
+
+    if(task.isEmpty){
+      setState(() {
+        errorText = 'It cannot be empty';
+      });
+      return;
+    }
     setState(() {
       Todo newTodo = Todo(title: task, dateTime: DateTime.now());
       todos.add(newTodo);
+
+
     });
     todoController.clear();
     todoRepository.saveTodoList(todos);
+    errorText = null;
   }
 
   void onComplete(Todo todo) {
