@@ -8,7 +8,7 @@ class TodoListItem extends StatefulWidget {
   const TodoListItem({
     Key? key,
     required this.todo,
-    required this.onDelete,
+     required this.onDelete,
     required this.onComplete,
   }) : super(key: key);
 
@@ -110,7 +110,7 @@ class _TodoListItemState extends State<TodoListItem> {
     );
   }
 
-  // void completedTodo(BuildContext context, todo) {}
+
 
 
 }
